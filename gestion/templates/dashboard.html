@@ -49,6 +49,20 @@
             font-size: 18px;
             float: right;
         }
+
+        .form-section {
+            border: 1px solid #ccc;
+            margin: 10px;
+            padding: 15px;
+        }
+
+        .options-button {
+            cursor: pointer;
+            color: #007BFF;
+            text-decoration: underline;
+            margin-left: 10px;
+        }
+
     </style>
 </head>
 <body>
@@ -102,21 +116,33 @@
     <h3>Carpetas:</h3>
     <ul>
         {% for carpeta in carpetas %}
-            <li>{{ carpeta.titulo }}</li>
+            <li>
+                {{ carpeta.titulo }} 
+                <a href="{% url 'eliminar_item' 'carpeta' carpeta.id %}">Eliminar</a> 
+                <a href="{% url 'editar_item' 'carpeta' carpeta.id %}" class="options-button">Modificar</a>
+            </li>
         {% endfor %}
     </ul>
 
     <h3>Proyectos:</h3>
     <ul>
         {% for proyecto in proyectos %}
-            <li>{{ proyecto.titulo }} - Fecha: {{ proyecto.fecha_limite }}</li>
+            <li>
+                {{ proyecto.titulo }} - Fecha: {{ proyecto.fecha_limite }} 
+                <a href="{% url 'eliminar_item' 'proyecto' proyecto.id %}">Eliminar</a> 
+                <a href="{% url 'editar_item' 'proyecto' proyecto.id %}" class="options-button">Modificar</a>
+            </li>
         {% endfor %}
     </ul>
 
     <h3>Tareas:</h3>
     <ul>
         {% for tarea in tareas %}
-            <li>{{ tarea.titulo }} - Fecha: {{ tarea.fecha_limite }}</li>
+            <li>
+                {{ tarea.titulo }} - Fecha: {{ tarea.fecha_limite }} 
+                <a href="{% url 'eliminar_item' 'tarea' tarea.id %}">Eliminar</a> 
+                <a href="{% url 'editar_item' 'tarea' tarea.id %}" class="options-button">Modificar</a>
+            </li>
         {% endfor %}
     </ul>
 </body>

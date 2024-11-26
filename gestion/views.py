@@ -32,8 +32,8 @@ def dashboard(request):
 
     # Obtener todas las carpetas, proyectos y tareas para mostrar
     carpetas = Carpeta.objects.all()
-    proyectos = Proyecto.objects.all()
-    tareas = Tarea.objects.all()
+    proyectos = Proyecto.objects.all().order_by('fecha_limite')  # Ordenar proyectos por fecha más cercana
+    tareas = Tarea.objects.all().order_by('fecha_limite')  # Ordenar tareas por fecha más cercana
 
     # Renderizar la página con los formularios y datos
     return render(request, 'dashboard.html', {
@@ -75,6 +75,28 @@ def editar_item(request, modelo, item_id):
         if form.is_valid():
             form.save()
             return redirect('dashboard')
+    else:
+        form = form_class(instance=item)
+
+    return render(request, 'editar_item.html', {'form': form, 'modelo': modelo})
+
+def editar_item(request, modelo, item_id):
+    if modelo == 'carpeta':
+        item = get_object_or_404(Carpeta, id=item_id)
+        form_class = CarpetaForm
+    elif modelo == 'proyecto':
+        item = get_object_or_404(Proyecto, id=item_id)
+        form_class = ProyectoForm
+    elif modelo == 'tarea':
+        item = get_object_or_404(Tarea, id=item_id)
+        form_class = TareaForm
+
+    if request.method == 'POST':
+        form = form_class(request.POST, instance=item)
+        if form.is_valid():
+            form.save()  # Guardar los cambios
+            return redirect('dashboard')  # Redirigir al dashboard después de guardar
+
     else:
         form = form_class(instance=item)
 

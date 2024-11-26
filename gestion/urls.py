@@ -6,5 +6,7 @@ urlpatterns = [
     path('dashboard/', views.dashboard, name='dashboard'),
     path('eliminar/<str:modelo>/<int:item_id>/', views.eliminar_item, name='eliminar_item'),
     path('editar/<str:modelo>/<int:item_id>/', views.editar_item, name='editar_item'),
+    path('editar_item/<str:modelo>/<int:item_id>/', views.editar_item, name='editar_item'),
+    path('eliminar_item/<str:modelo>/<int:item_id>/', views.eliminar_item, name='eliminar_item'),
 
 ]
